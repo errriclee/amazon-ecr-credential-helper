@@ -22,5 +22,15 @@ jobs:
       - checkout
 
       # specify any bash command here prefixed with `run: `
-      - run: go get -v -t -d ./...
-      - run: go test -v ./...
+      #- run: go get -v -t -d ./...
+      #- run: go test -v ./...
+
+      - run: make get-deps
+
+      - run: ./scripts/hack/symlink-gopath-codebuild.sh
+      - run: cd /go/src/github.com/awslabs/amazon-ecr-credential-helper
+      - run: echo "Starting tests..."
+      - run: make test
+      - run: echo "Starting build..."
+      - run: make all-variants
+
